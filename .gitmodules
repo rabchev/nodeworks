@@ -1,0 +1,9 @@
+[submodule "brackets-src"]
+	path = brackets-src
+	url = https://github.com/rabchev/node-brackets-src.git
+[submodule "node_modules/supervisor"]
+	path = node_modules/supervisor
+	url = https://github.com/rabchev/node-supervisor.git
+[submodule "node_modules/terminal"]
+	path = node_modules/terminal
+	url = https://github.com/rabchev/node-browser-shell.git
