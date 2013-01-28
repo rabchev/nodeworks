@@ -1,7 +1,7 @@
 {
     "name": "works",
     "description": "Node.js IDE",
-    "version": "0.0.1-beta-6",
+    "version": "0.0.1-beta-7",
     "author": "Boyan Rabchev <boyan@rabchev.com>",
     "contributors": [
         { "name": "Boyan Rabchev", "email": "boyan@rabchev.com" }

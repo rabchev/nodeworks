@@ -30,6 +30,7 @@ if (commander.options.length === 0) {
             .version(pkg.version)
             .option("-o, --open", Strings.ARGV_OPEN)
             .option("-i, --install <template>", Strings.ARGV_INSTALL)
+            .option("-d, --directory <directory>", Strings.ARGV_DIRECTORY)
             .option("-s, --start", Strings.ARGV_START)
             .option("-f, --force", Strings.ARGV_FORCE)
             .option("--IDE.port <port>", Strings.ARGV_IDE_PROT)
@@ -52,6 +53,10 @@ var log = function (message) {
 
 var startWorks = function (port, callback) {
     "use strict";
+    
+    if (commander.directory) {
+        process.chdir(commander.directory);
+    }
     
     app = connect()
         .use("/works", works())
