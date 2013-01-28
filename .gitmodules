@@ -7,6 +7,3 @@
 [submodule "node_modules/terminal"]
 	path = node_modules/terminal
 	url = https://github.com/rabchev/node-browser-shell.git
-[submodule "bin/templates/real-estate"]
-	path = bin/templates/real-estate
-	url = https://github.com/rabchev/real-est-tmpl.git
