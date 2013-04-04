@@ -28,7 +28,8 @@
         "node-inspector": "*",
         "socket.io": "*",
         "nconf": "*",
-        "underscore": "*"
+        "underscore": "*",
+        "web-terminal": "*"
     },
     "devDependencies": {
         "nodeunit": "*",
