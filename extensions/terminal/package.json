@@ -1,0 +1,15 @@
+{
+    "name": "terminal",
+    "description": "Web-Terminal extesion for Nodeworks.",
+    "version": "1.0.0",
+    "author": "Boyan Rabchev <boyan@rabchev.com>",
+    "contributors": [
+        { "name": "Boyan Rabchev", "email": "boyan@rabchev.com" }
+    ],
+    "repository": "https://github.com/rabchev/nodeworks.git",
+    "main": "index",
+    "clientMain": "client/menu.js",
+    "dependencies": {
+        "web-terminal": "*"
+    }
+}
