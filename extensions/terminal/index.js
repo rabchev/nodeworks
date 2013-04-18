@@ -3,10 +3,10 @@
 
 var app         = require("../../lib/app"),
     path        = require("path"),
-    cmdLine = "node " + path.join(__dirname, "..", "node_modules", "web-terminal", "bin", "run");
+    cmdLine = "node " + path.join(__dirname, "..", "..", "node_modules", "web-terminal", "bin", "run");
 
 app.terminalStart = function (callback) {
     "use strict";
         
-    this.startHttpServer(cmdLine, callback);
+    app.startHttpServer(cmdLine, callback);
 };

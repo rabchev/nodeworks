@@ -6,7 +6,7 @@ define(function (require, exports, module) {
     
     var CommandManager          = brackets.getModule("command/CommandManager"),
         Dialogs                 = brackets.getModule("widgets/Dialogs"),
-        Strings                 = require("strings"),
+        Strings                 = require("terminal/strings"),
         terminalWin,
         terminalPort;
     
@@ -56,5 +56,5 @@ define(function (require, exports, module) {
         }
     }
     
-    CommandManager.register(Strings.CMD_TERMINAL,   exports.TOOLS_TERMINAL,      handleTerminal);
+    CommandManager.register(Strings.CMD_TERMINAL, exports.TOOLS_TERMINAL, handleTerminal);
 });
