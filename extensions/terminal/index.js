@@ -7,6 +7,6 @@ var app         = require("../../lib/app"),
 
 app.terminalStart = function (callback) {
     "use strict";
-        
+    
     app.startHttpServer(cmdLine, callback);
 };

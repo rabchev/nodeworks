@@ -5,8 +5,8 @@ define(function (require, exports, module) {
     "use strict";
     
     var Menus           = brackets.getModule("command/Menus"),
-        Commands        = require("terminal/commands"),
-        menu            = Menus.getMenu(Menus.AppMenuBar.TOOLS_MENU);
+        Commands        = require("modules/commands"),
+        menu            = Menus.getMenu(Menus.AppMenuBar.PROJECT_MENU);
     
-    menu.addMenuItem(Commands.TOOLS_TERMINAL, "Alt-Shift-T", Menus.BEFORE, "tools.options");
+    menu.addMenuItem(Commands.PROJECT_MODULES, "Alt-Shift-M", Menus.AFTER, "project.live");
 });
