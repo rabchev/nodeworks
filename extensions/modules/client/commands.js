@@ -15,7 +15,7 @@ define(function (require, exports, module) {
     function handleModules() {
         var DocumentManager     = brackets.getModule("document/DocumentManager"),
             NativeFileSystem    = brackets.getModule("file/NativeFileSystem").NativeFileSystem,
-            fileEntry           = new NativeFileSystem.FileEntry("form://extensions.svc/modules/client/controler.js");
+            fileEntry           = new NativeFileSystem.FileEntry("form://extensions.svc/modules/client/controller.js");
             
         fileEntry.name = Strings.WINDOW_TITLE;
         

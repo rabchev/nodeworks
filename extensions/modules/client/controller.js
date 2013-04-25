@@ -7,7 +7,7 @@ define(function (require, exports, module) {
     module.exports = exports = function (editor) {
         var root = editor.getRootElement();
         
-        $(root).html("<h1>Hello World</h1>");
+        $(root).html(require("text!modules/main.html"));
     };
     
 });
