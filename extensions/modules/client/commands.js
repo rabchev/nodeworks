@@ -13,13 +13,20 @@ define(function (require, exports, module) {
     exports.PROJECT_MODULES       = "project.modules";
         
     function handleModules() {
-        var DocumentManager     = brackets.getModule("document/DocumentManager"),
-            NativeFileSystem    = brackets.getModule("file/NativeFileSystem").NativeFileSystem,
-            fileEntry           = new NativeFileSystem.FileEntry("form://extensions.svc/modules/client/controller.js");
-            
-        fileEntry.name = Strings.WINDOW_TITLE;
+        var path                = "form://extensions.svc/modules/client/controller.js",
+            DocumentManager     = brackets.getModule("document/DocumentManager"),
+            doc                 = DocumentManager.getOpenDocumentForPath(path);
         
-        DocumentManager.setCurrentDocument(new DocumentManager.Document(fileEntry, null, ""));
+        if (!doc) {
+            var NativeFileSystem    = brackets.getModule("file/NativeFileSystem").NativeFileSystem,
+                fileEntry           = new NativeFileSystem.FileEntry(path),
+                timestamp           = new Date();
+                
+            fileEntry.name = Strings.WINDOW_TITLE;
+            doc = new DocumentManager.Document(fileEntry, timestamp, "");
+        }
+        
+        DocumentManager.setCurrentDocument(doc);
     }
     
     CommandManager.register(Strings.CMD_MODULES, exports.PROJECT_MODULES, handleModules);
