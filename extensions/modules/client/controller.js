@@ -1,10 +1,16 @@
 /*jslint vars: true, plusplus: true, devel: true, nomen: true, regexp: true, indent: 4, maxerr: 50 */
-/*global define, $, brackets, unescape, window */
+/*global define, $, brackets, unescape, window, Mustache */
 
 define(function (require, exports, module) {
     "use strict";
     
-    var currRepo,
+    var Strings         = require("modules/strings"),
+        labels          = {
+            addRepo     : Strings.LBL_ADD_REPO,
+            installed   : Strings.LBL_INSTALLED,
+            npm         : Strings.LBL_NPM
+        },
+        currRepo,
         editor,
         root;
     
@@ -25,7 +31,15 @@ define(function (require, exports, module) {
     
     function showInstalled() {
         setCurrRepo("installed");
-        alert("Not implemented yet.");
+        
+        brackets.app.callCommand("modules", "showInstalled", [], true, function (err, res) {
+            if (err) {
+                alert(err.message);
+            } else {
+             
+                alert(res.message);
+            }
+        });
     }
     
     function showNPM() {
@@ -43,7 +57,7 @@ define(function (require, exports, module) {
             );
         }
         root.addClass("md-root");
-        root.html(require("text!modules/main.html"));
+        root.html(Mustache.render(require("text!modules/main.html"), { labels: labels }));
         
         $("#installed").on("click", showInstalled);
         $("#npm").on("click", showNPM);
