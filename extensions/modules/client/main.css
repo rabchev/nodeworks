@@ -1,3 +1,111 @@
 .md-root {
-    padding: 20px;
+    
+}
+
+.md-left-col {
+    float: left;
+    width: 200px;
+    background: #eee;
+    display: table;
+    height: 100%;
+    padding: 0px;
+    padding-top: 10px; 
+}
+
+.md-mid-col {
+    float: left;
+    display: table;
+    width: 300px;
+    height: 100%;
+    border-left: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+}
+
+.md-right-col {
+    float: left;
+}
+
+.md-sidebar {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.md-sidebar-itm {
+    background: #eee;
+    width: 100%;
+    padding: 0px;
+    cursor: pointer;
+}
+
+.md-sidebar-itm-a {
+    color: #777;
+    margin-left: 20px;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.md-sidebar-itm-a:hover {
+    text-decoration: none;
+    color: #777;
+}
+
+.md-sidebar-itm:hover {
+    background: #e5e5e5;
+}
+
+.md-selected {
+    background: #ccc;
+}
+
+.md-selected:hover {
+    background: #ccc;
+}
+
+.md-rule {
+    border-bottom: 1px solid #ccc;
+    clear: both;
+    margin: 5px 20px;
+}
+
+#md-header {
+    padding: 5px;
+    margin: 5px;
+    background-color: #eee;
+}
+
+#md-sidebar {
+    margin-top: 5px;
+}
+
+#search-box {
+    width: 176px;
+    line-height: 18px;
+    height: 20px;
+    padding: 2px 6px 0;
+    border: 1px solid #999999;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    background: #fff;
+    margin: 10px;
+}
+
+#md-add-repo-cnt {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #5d5f60;
+    border-radius: 3px;
+    border: 0;
+    cursor: pointer;
+    margin: 10px;
+}
+
+#md-add-repo-a {
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
 }
