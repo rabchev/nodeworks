@@ -1,4 +1,4 @@
-<div class="md-left-col">
+<div id="md-left-col">
     <input name="search-box" id="search-box" placeholder="Search..." type="text" autocomplete="off">
     <div id="md-sidebar">
         <ul class="md-sidebar">
@@ -19,9 +19,17 @@
         </div>
     </div>
 </div>
-<div class="md-mid-col">
+<div id="md-mid-col">
     
 </div>
-<div class="md-right-col">
+<div id="md-right-col">
     &nbsp;
+</div>
+<!-- Templates -->
+<div id="md-list-tmpl" class="hide">
+    <ul>
+    {{#modules}}
+        <li>{{name}}</li>
+    {{/modules}}
+    </ul>
 </div>

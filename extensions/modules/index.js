@@ -20,7 +20,19 @@ exports.showInstalled = function (callback) {
             callback(err);
         } else {
             npm.commands.list([], function (err, res) {
-                callback(err, res);
+                var list = [],
+                    mod,
+                    i;
+                
+                for (i = 0; i < res.dependencies.length; i++) {
+                    mod = res.dependencies[i];
+                    list.push({
+                        id: mod.id,
+                        name: mod.name,
+                        version: mod.version
+                    });
+                }
+                callback(err, list);
             });
         }
     });

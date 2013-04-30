@@ -36,8 +36,7 @@ define(function (require, exports, module) {
             if (err) {
                 alert(err.message);
             } else {
-             
-                alert(res.message);
+                $("#md-mid-col").html(Mustache.render($("#md-list-tmpl").html(), { modules: res }));
             }
         });
     }
