@@ -21,16 +21,21 @@ exports.showInstalled = function (callback) {
         } else {
             npm.commands.list([], function (err, res) {
                 var list = [],
-                    mod,
-                    i;
+                    deps = res.dependencies,
+                    prop,
+                    mod;
                 
-                for (i = 0; i < res.dependencies.length; i++) {
-                    mod = res.dependencies[i];
-                    list.push({
-                        id: mod.id,
-                        name: mod.name,
-                        version: mod.version
-                    });
+                for (prop in deps) {
+                    if (deps.hasOwnProperty(prop)) {
+                        mod = deps[prop];
+                        list.push({
+                            _id: mod._id,
+                            name: mod.name,
+                            version: mod.version,
+                            description: mod.description,
+                            isExtraneous: mod.isExtraneous
+                        });
+                    }
                 }
                 callback(err, list);
             });

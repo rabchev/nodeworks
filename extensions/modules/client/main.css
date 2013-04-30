@@ -45,27 +45,72 @@
     margin: 5px 20px;
 }
 
+.md-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    margin-top: 20;
+}
+
+.md-list-itm {
+    width: 100%;
+    padding: 0px;
+    cursor: pointer;
+}
+
+.md-list-itm-a {
+    color: #777;
+    margin-top: 2px;
+    margin-left: 20px;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.md-list-itm-a div {
+    margin-left: 10px;
+    margin-right: 10px;
+    font-style: normal;
+    font-size: 12px;
+}
+
+.md-list-itm-a:hover {
+    text-decoration: none;
+    color: #777;
+}
+
+.md-list-itm:hover {
+    background: #e5e5e5;
+}
+
+
 #md-left-col {
     float: left;
-    width: 200px;
+    width: 208px;
     background: #eee;
-    display: table;
+    display: block;
     height: 100%;
     padding: 0px;
-    padding-top: 10px; 
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 #md-mid-col {
     float: left;
-    display: table;
+    display: block;
     width: 300px;
     height: 100%;
     border-left: 1px solid #e5e5e5;
     border-right: 1px solid #e5e5e5;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0px;
 }
 
 #md-right-col {
+    display: block;
     float: left;
+    padding: 0px;
+    overflow: auto;
 }
 
 #md-header {
@@ -92,6 +137,7 @@
     background-clip: padding-box;
     background: #fff;
     margin: 10px;
+    margin-top: 15px;
 }
 
 #md-add-repo-cnt {

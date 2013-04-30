@@ -5,6 +5,7 @@ define(function (require, exports, module) {
     "use strict";
     
     var Strings         = require("modules/strings"),
+        Templates       = $(require("text!modules/templates.html")),
         labels          = {
             addRepo     : Strings.LBL_ADD_REPO,
             installed   : Strings.LBL_INSTALLED,
@@ -12,9 +13,13 @@ define(function (require, exports, module) {
         },
         currRepo,
         editor,
-        root;
+        root,
+        midCol,
+        rightCol;
     
     function setCurrRepo(repo) {
+        midCol.empty();
+        rightCol.empty();
         if (currRepo !== repo) {
             if (currRepo) {
                 $("#" + currRepo).removeClass("md-selected");
@@ -33,17 +38,24 @@ define(function (require, exports, module) {
         setCurrRepo("installed");
         
         brackets.app.callCommand("modules", "showInstalled", [], true, function (err, res) {
+            if (res) {
+                res.sort(function (a, b) {
+                    return a.name.localeCompare(b.name);
+                });
+                var tmpl = Templates.find("#md-list-tmpl");
+                midCol.html(Mustache.render(tmpl.html(), { modules: res }));
+            }
+            
             if (err) {
-                alert(err.message);
-            } else {
-                $("#md-mid-col").html(Mustache.render($("#md-list-tmpl").html(), { modules: res }));
+                // TODO: print error or warning message
             }
         });
     }
     
     function showNPM() {
         setCurrRepo("npm");
-        alert("Not implemented yet.");
+        
+        
     }
     
     module.exports = exports = function (edtr) {
@@ -58,11 +70,14 @@ define(function (require, exports, module) {
         root.addClass("md-root");
         root.html(Mustache.render(require("text!modules/main.html"), { labels: labels }));
         
+        midCol = $("#md-mid-col");
+        rightCol = $("#md-right-col")
+        
         $("#installed").on("click", showInstalled);
         $("#npm").on("click", showNPM);
         $("#addRepo").on("click", addRepo);
         
-        setCurrRepo("installed");
+        showInstalled();
         
         // Cleanup on close
         $(editor).on("closing", function () {

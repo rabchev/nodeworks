@@ -1,0 +1,17 @@
+<div>
+    <div id="md-list-tmpl">
+        <div style="margin-top: 15px;"></div>
+        <ul class="md-list">
+        {{#modules}}
+            <li>
+                <div id="{{_id}}" class="md-list-itm">
+                    <a class="md-list-itm-a" href="#">
+                        <strong>{{name}}</strong>
+                        <div>{{description}}</div>
+                    </a>
+                </div>
+            </li>
+        {{/modules}}
+        </ul>
+    </div>
+</div>
