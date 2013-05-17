@@ -1,5 +1,5 @@
 /*jslint vars: true, plusplus: true, devel: true, nomen: true, regexp: true, indent: 4, maxerr: 50 */
-/*global define, $, brackets, unescape, window, Mustache */
+/*global define, $, brackets, unescape, window, document, Mustache */
 
 define(function (require, exports, module) {
     "use strict";
@@ -11,16 +11,35 @@ define(function (require, exports, module) {
             installed   : Strings.LBL_INSTALLED,
             npm         : Strings.LBL_NPM
         },
+        detLabels       = {
+            addRemove   : Strings.LBL_UNINSTALL,
+            readMe      : Strings.LBL_VIEW_README,
+            viewDeps    : Strings.LBL_VIEW_DEPS,
+            description : Strings.LBL_DESCRIPTION,
+            version     : Strings.LBL_VERSION,
+            license     : Strings.LBL_LICENSE,
+            author      : Strings.LBL_AUTHOR,
+            contribs    : Strings.LBL_CONTRIBS,
+            repository  : Strings.LBL_REPOSITORY,
+            bugs        : Strings.LBL_BUGS,
+            name        : Strings.LBL_NAME,
+            email       : Strings.LBL_EMAIL,
+            url         : Strings.LBL_URL,
+            type        : Strings.LBL_TYPE,
+            homepage    : Strings.LBL_HOMEPAGE
+        },
         currRepo,
         editor,
         root,
         midCol,
-        rightCol;
+        rightCol,
+        currMod;
     
     function setCurrRepo(repo) {
-        midCol.empty();
-        rightCol.empty();
         if (currRepo !== repo) {
+            midCol.empty();
+            rightCol.empty();
+            
             if (currRepo) {
                 $("#" + currRepo).removeClass("md-selected");
             }
@@ -30,8 +49,44 @@ define(function (require, exports, module) {
         }
     }
     
+    function setCurrListItem(item) {
+        if (currMod !== item) {
+            rightCol.empty();
+            
+            if (currMod) {
+                $(document.getElementById(currMod)).removeClass("md-selected");
+            }
+            
+            currMod = item;
+            $(document.getElementById(currMod)).addClass("md-selected");
+        }
+    }
+    
     function addRepo() {
         alert("Not implemented yet.");
+    }
+    
+    function showDetailes(id) {
+        setCurrListItem(id);
+        
+        var tmpl    = Templates.find("#md-details-tmpl");
+        
+        brackets.app.callCommand("modules", "getInstalledModule", [id], true, function (err, res) {
+            if (res) {
+                res.labels = detLabels;
+                if (typeof res.license === "string") {
+                    res.license = { type: res.license };
+                }
+                if (typeof res.bugs === "string") {
+                    res.bugs = { url: res.bugs };
+                }
+                rightCol.html(Mustache.render(tmpl.html(), res));
+            }
+            
+            if (err) {
+                // TODO: print error or warning message
+            }
+        });
     }
     
     function showInstalled() {
@@ -44,6 +99,20 @@ define(function (require, exports, module) {
                 });
                 var tmpl = Templates.find("#md-list-tmpl");
                 midCol.html(Mustache.render(tmpl.html(), { modules: res }));
+                
+                var listItems   = $(".md-list-itm"),
+                    click       = function (el) {
+                        showDetailes(el.currentTarget.id);
+                    },
+                    i;
+                
+                for (i = 0; i < listItems.length; i++) {
+                    $(listItems[i]).on("click", click);
+                }
+                
+                if (res.length > 0) {
+                    showDetailes(res[0]._id);
+                }
             }
             
             if (err) {
@@ -71,7 +140,7 @@ define(function (require, exports, module) {
         root.html(Mustache.render(require("text!modules/main.html"), { labels: labels }));
         
         midCol = $("#md-mid-col");
-        rightCol = $("#md-right-col")
+        rightCol = $("#md-right-col");
         
         $("#installed").on("click", showInstalled);
         $("#npm").on("click", showNPM);

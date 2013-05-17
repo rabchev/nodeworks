@@ -14,4 +14,71 @@
         {{/modules}}
         </ul>
     </div>
+    <div id="md-details-tmpl">
+        <h2 id="md-det-title">{{name}}</h2>
+        <div class="md-rule2"></div>
+        <div id="md-det-hdr">
+            <a href="#" id="md-readMe" class="md-btn">{{labels.readMe}}</a>
+            <a href="#" id="md-deps" class="md-btn">{{labels.viewDeps}}</a>
+            <a href="#" id="md-addRemove" class="md-btn">{{labels.addRemove}}</a>
+        </div>
+        <div id="md-det-cnt">
+            {{#description}}
+            <h4>{{labels.description}}</h4>
+            <p>{{description}}</p>
+            {{/description}}
+            {{#version}}
+            <h4>{{labels.version}}</h4>
+            <p>{{version}}</p>
+            {{/version}}
+            {{#author}}
+            <h4>{{labels.author}}</h4>
+            <ul>
+                {{#author.name}}
+                <li><span class="md-label">{{labels.name}}:</span>{{author.name}}</li>
+                {{/author.name}}
+                {{#author.email}}
+                <li><span class="md-label">{{labels.email}}:</span>{{author.email}}</li>
+                {{/author.email}}
+            </ul>
+            {{/author}}
+            {{#license}}
+            <h4>{{labels.license}}</h4>
+            <ul>
+                {{#license.type}}
+                <li><span class="md-label">{{labels.type}}:</span>{{license.type}}</li>
+                {{/license.type}}
+                {{#license.url}}
+                <li><span class="md-label">{{labels.url}}:</span><a href="{{license.url}}" target="_blank">{{license.url}}</a></li>
+                {{/license.url}}
+            </ul>
+            {{/license}}
+            {{#homepage}}
+            <h4>{{labels.homepage}}</h4>
+            <p><a href="{{homepage}}" target="_blank">{{homepage}}</a></p>
+            {{/homepage}}
+            {{#repository}}
+            <h4>{{labels.repository}}</h4>
+            <ul>
+                {{#repository.type}}
+                <li><span class="md-label">{{labels.type}}:</span>{{repository.type}}</li>
+                {{/repository.type}}
+                {{#repository.url}}
+                <li><span class="md-label">{{labels.url}}:</span><a href="{{repository.url}}" target="_blank">{{repository.url}}</a></li>
+                {{/repository.url}}
+            </ul>
+            {{/repository}}
+            {{#bugs}}
+            <h4>{{labels.bugs}}</h4>
+            <ul>
+                {{#bugs.url}}
+                <li><span class="md-label">{{labels.url}}:</span><a href="{{bugs.url}}" target="_blank">{{bugs.url}}</a></li>
+                {{/bugs.url}}
+                {{#bugs.email}}
+                <li><span class="md-label">{{labels.email}}:</span>{{bugs.email}}</li>
+                {{/bugs.email}}
+            </ul>
+            {{/bugs}}
+        </div>
+    </div>
 </div>
