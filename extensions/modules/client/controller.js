@@ -72,6 +72,8 @@ define(function (require, exports, module) {
         var tmpl    = Templates.find("#md-details-tmpl");
         
         brackets.app.callCommand("modules", "getInstalledModule", [id], true, function (err, res) {
+            var readMe;
+            
             if (res) {
                 res.labels = detLabels;
                 if (typeof res.license === "string") {
@@ -81,6 +83,14 @@ define(function (require, exports, module) {
                     res.bugs = { url: res.bugs };
                 }
                 rightCol.html(Mustache.render(tmpl.html(), res));
+                readMe = rightCol.find("#md-readMe");
+                if (res.readme) {
+                    readMe.click(function () {
+                        window.open("");
+                    });
+                } else {
+                    readMe.addClass("hide");
+                }
             }
             
             if (err) {
