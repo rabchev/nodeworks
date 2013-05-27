@@ -1,7 +1,9 @@
 /*jslint plusplus: true, devel: true, nomen: true, vars: true, node: true, es5: true, indent: 4, maxerr: 50 */
 /*global require, exports, module */
 
-var npm             = require("npm"),
+var fs              = require("fs"),
+    npm             = require("npm"),
+    path            = require("path"),
     npmconf         = require("npmconf"),
     nopt            = require("nopt"),
     readInstalled   = require("../../node_modules/npm/node_modules/read-installed"),
@@ -10,7 +12,49 @@ var npm             = require("npm"),
     types           = configDefs.types,
     works           = require("../../lib/works"),
     path            = require("path"),
-    semver          = require("semver");
+    semver          = require("semver"),
+    marked          = require("marked"),
+    mustach         = require("../../brackets-src/src/thirdparty/mustache"),
+    readmeTmpl;
+
+works.registerHttpHandler({
+    path    : "/modules/readme/",
+    handle  : function (req, res) {
+        "use strict";
+        
+        var name = req.url.substr(16);
+        
+        readInstalled(process.cwd(), function (err, rootObj) {
+            var dep, model;
+            
+            if (err) {
+                res.writeHead(500, {"Content-Type": "text/plain; charset=UTF-8"});
+                res.write(err);
+                res.end();
+            } else {
+                dep = rootObj.dependencies[name];
+                if (dep) {
+                    if (!readmeTmpl) {
+                        readmeTmpl = fs.readFileSync(path.join(__dirname, "readme.html"), "utf8");
+                    }
+                    
+                    model = {
+                        title: "README: " + name,
+                        body: marked(dep.readme)
+                    };
+                    
+                    res.writeHead(200, {"Content-Type": "text/html; charset=UTF-8"});
+                    res.write(mustach.render(readmeTmpl, model));
+                    res.end();
+                } else {
+                    res.writeHead(404, {"Content-Type": "text/plain; charset=UTF-8"});
+                    res.write("Not Found");
+                    res.end();
+                }
+            }
+        });
+    }
+});
 
 exports.showInstalled = function (callback) {
     "use strict";
@@ -24,13 +68,23 @@ exports.showInstalled = function (callback) {
         for (prop in deps) {
             if (deps.hasOwnProperty(prop)) {
                 mod = deps[prop];
-                list.push({
-                    _id             : mod._id,
-                    name            : mod.name,
-                    version         : mod.version,
-                    description     : mod.description,
-                    isExtraneous    : mod.isExtraneous
-                });
+                if (typeof mod === "string") {
+                    list.push({
+                        _id             : prop + "@" + mod,
+                        name            : prop,
+                        version         : mod,
+                        description     : "Error: Unmet Dependency",
+                        error           : "unmet-dependency"
+                    });
+                } else {
+                    list.push({
+                        _id             : mod._id,
+                        name            : mod.name,
+                        version         : mod.version,
+                        description     : mod.description,
+                        isExtraneous    : mod.isExtraneous
+                    });
+                }
             }
         }
         callback(err, list);
@@ -43,7 +97,6 @@ exports.getInstalledModule = function (id, callback) {
     readInstalled(process.cwd(), function (err, rootObj) {
         var nv      = id.split("@"),
             name    = nv.shift(),
-            ver     = semver.validRange(nv.join("@")) || "",
             dep     = rootObj.dependencies[name],
             mod     = {
                 _id             : dep._id,
@@ -53,7 +106,7 @@ exports.getInstalledModule = function (id, callback) {
                 isExtraneous    : dep.isExtraneous,
                 author          : dep.author,
                 repository      : dep.repository,
-                readme          : dep.readme,
+                readmeFilename  : dep.readmeFilename,
                 bugs            : dep.bugs,
                 license         : dep.license,
                 homepage        : dep.homepage

@@ -84,9 +84,9 @@ define(function (require, exports, module) {
                 }
                 rightCol.html(Mustache.render(tmpl.html(), res));
                 readMe = rightCol.find("#md-readMe");
-                if (res.readme) {
+                if (res.readmeFilename) {
                     readMe.click(function () {
-                        window.open("");
+                        window.open("modules/readme/" + res.name, res.name);
                     });
                 } else {
                     readMe.addClass("hide");

@@ -29,7 +29,8 @@
         "socket.io": "*",
         "nconf": "*",
         "underscore": "*",
-        "web-terminal": "*"
+        "web-terminal": "*",
+        "marked": "*"
     },
     "devDependencies": {
         "nodeunit": "*",
