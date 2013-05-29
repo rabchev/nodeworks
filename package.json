@@ -29,6 +29,7 @@
         "socket.io": "*",
         "nconf": "*",
         "underscore": "*",
+        "underscore.string": "*",
         "web-terminal": "*",
         "marked": "*"
     },

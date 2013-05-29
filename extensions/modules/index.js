@@ -5,6 +5,7 @@ var fs              = require("fs"),
     npm             = require("npm"),
     path            = require("path"),
     npmconf         = require("npmconf"),
+    _               = require("underscore"),
     nopt            = require("nopt"),
     readInstalled   = require("../../node_modules/npm/node_modules/read-installed"),
     configDefs      = npmconf.defs,
@@ -15,7 +16,36 @@ var fs              = require("fs"),
     semver          = require("semver"),
     marked          = require("marked"),
     mustach         = require("../../brackets-src/src/thirdparty/mustache"),
+    codeMirror      = require("../../lib/CodeMirror"),
     readmeTmpl;
+
+_.str = require("underscore.string");
+_.mixin(_.str.exports());
+
+marked.setOptions({
+    sanitize: true,
+    smartLists: true,
+    breaks: true,
+    highlight: function (code, lang) {
+        "use strict";
+        
+        var mode, buff;
+        
+        if (lang) {
+            buff = "";
+            codeMirror.runMode(code, lang, function (text, style) {
+                if (style) {
+                    buff += "<span class=\"cm-" + style + "\">" + _(text).escapeHTML() + "</span>";
+                } else {
+                    buff += _(text).escapeHTML();
+                }
+            });
+            code = buff;
+        }
+        
+        return code;
+    }
+});
 
 works.registerHttpHandler({
     path    : "/modules/readme/",

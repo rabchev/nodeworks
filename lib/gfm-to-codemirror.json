@@ -1,0 +1,23 @@
+{
+    "js"            : "text/javascript",
+    "javascript"    : "text/javascript",
+    "rb"            : "text/x-ruby",
+    "ruby"          : "text/x-ruby",
+    "html"          : "text/html",
+    "xml"           : "application/xml",
+    "php"           : "text/x-php",
+    "sql"           : "text/x-sql",
+    "css"           : "text/css",
+    "coffee-script" : "text/x-coffeescript",
+    "coffeescript"  : "text/x-coffeescript",
+    "c"             : "text/x-csrc",
+    "csharp"        : "text/x-csharp",
+    "cpp"           : "text/x-c++src",
+    "py"            : "text/x-python",
+    "python"        : "text/x-python",
+    "java"          : "text/x-java",
+    "bash"          : "text/x-sh",
+    "shell"         : "text/x-sh",
+    "console"       : "text/x-sh",
+    "json"          : "application/json"
+}
