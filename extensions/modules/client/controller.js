@@ -4,7 +4,8 @@
 define(function (require, exports, module) {
     "use strict";
     
-    var Strings         = require("modules/strings"),
+    var Dialogs         = brackets.getModule("widgets/Dialogs"),
+        Strings         = require("modules/strings"),
         Templates       = $(require("text!modules/templates.html")),
         labels          = {
             addRepo     : Strings.LBL_ADD_REPO,
@@ -72,7 +73,7 @@ define(function (require, exports, module) {
         var tmpl    = Templates.find("#md-details-tmpl");
         
         brackets.app.callCommand("modules", "getInstalledModule", [id], true, function (err, res) {
-            var readMe;
+            var el;
             
             if (res) {
                 res.labels = detLabels;
@@ -83,14 +84,37 @@ define(function (require, exports, module) {
                     res.bugs = { url: res.bugs };
                 }
                 rightCol.html(Mustache.render(tmpl.html(), res));
-                readMe = rightCol.find("#md-readMe");
+                el = rightCol.find("#md-readMe");
                 if (res.readmeFilename) {
-                    readMe.click(function () {
+                    el.click(function () {
                         window.open("modules/readme/" + res.name, res.name);
                     });
                 } else {
-                    readMe.addClass("hide");
+                    el.addClass("hide");
                 }
+                
+                el = rightCol.find("#md-deps");
+                el.click(function () {
+                    brackets.app.callCommand("modules", "getDeps", [id], true, function (err, res) {
+                        if (err) {
+                            throw err;
+                        }
+                        
+                        var tmpl    = Templates.find("#md-deps-dialog"),
+                            part    = {
+                                part: tmpl.find(".modal-body").html()
+                            },
+                            mod     = {
+                                deps    : res,
+                                labels  : {
+                                    title   : Strings.VIEW_DEPS_TITLE,
+                                    close   : Strings.CMD_CLOSE
+                                }
+                            };
+                        
+                        Dialogs.showModalDialogUsingTemplate(Mustache.render(tmpl.html(), mod, part));
+                    });
+                });
             }
             
             if (err) {

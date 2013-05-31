@@ -86,38 +86,50 @@ works.registerHttpHandler({
     }
 });
 
+function surrogate(deps, recur) {
+    "use strict";
+    
+    var list = [],
+        prop,
+        mod,
+        surr;
+    
+    for (prop in deps) {
+        if (deps.hasOwnProperty(prop)) {
+            mod = deps[prop];
+            if (typeof mod === "string") {
+                list.push({
+                    _id             : prop + "@" + mod,
+                    name            : prop,
+                    version         : mod,
+                    description     : "Error: Unmet Dependency",
+                    error           : "unmet-dependency"
+                });
+            } else {
+                surr = {
+                    _id             : mod._id,
+                    name            : mod.name,
+                    version         : mod.version,
+                    description     : mod.description,
+                    isExtraneous    : mod.isExtraneous
+                };
+                
+                if (recur && mod.dependencies) {
+                    surr.deps = surrogate(mod.dependencies, recur);
+                }
+                list.push(surr);
+            }
+        }
+    }
+    
+    return list;
+}
+
 exports.showInstalled = function (callback) {
     "use strict";
     
     readInstalled(process.cwd(), function (err, rootObj) {
-        var list = [],
-            deps = rootObj.dependencies,
-            prop,
-            mod;
-        
-        for (prop in deps) {
-            if (deps.hasOwnProperty(prop)) {
-                mod = deps[prop];
-                if (typeof mod === "string") {
-                    list.push({
-                        _id             : prop + "@" + mod,
-                        name            : prop,
-                        version         : mod,
-                        description     : "Error: Unmet Dependency",
-                        error           : "unmet-dependency"
-                    });
-                } else {
-                    list.push({
-                        _id             : mod._id,
-                        name            : mod.name,
-                        version         : mod.version,
-                        description     : mod.description,
-                        isExtraneous    : mod.isExtraneous
-                    });
-                }
-            }
-        }
-        callback(err, list);
+        callback(err, surrogate(rootObj.dependencies));
     });
 };
 
@@ -143,6 +155,18 @@ exports.getInstalledModule = function (id, callback) {
             };
         
         callback(err, mod);
+    });
+};
+
+exports.getDeps = function (id, callback) {
+    "use strict";
+    
+    readInstalled(process.cwd(), function (err, rootObj) {
+        var nv      = id.split("@"),
+            name    = nv.shift(),
+            dep     = rootObj.dependencies[name];
+        
+        callback(err, surrogate(dep.dependencies, true));
     });
 };
 

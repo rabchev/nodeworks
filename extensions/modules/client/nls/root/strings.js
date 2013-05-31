@@ -9,6 +9,7 @@ define({
      */
     "WINDOW_TITLE"              : "[Modules]",
     "CMD_MODULES"               : "Modules...",
+    "CMD_CLOSE"                 : "Close",
     "LBL_ADD_REPO"              : "Add NPM Registry...",
     "LBL_INSTALLED"             : "Installed",
     "LBL_NPM"                   : "NPM - npmjs.org",
@@ -27,7 +28,7 @@ define({
     "LBL_EMAIL"                 : "Email",
     "LBL_URL"                   : "URL",
     "LBL_TYPE"                  : "Type",
-    "LBL_HOMEPAGE"              : "Homepage"
+    "LBL_HOMEPAGE"              : "Homepage",
     
     /**
      * Errors
@@ -36,4 +37,5 @@ define({
     /**
      * Dialogs
      */
+    "VIEW_DEPS_TITLE"           : "Dependencies"
 });

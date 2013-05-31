@@ -81,4 +81,24 @@
             {{/bugs}}
         </div>
     </div>
+    <div id="md-deps-dialog">
+        <div class="deps-dialog modal">
+            <div class="modal-header">
+                <h1 class="dialog-title">{{labels.title}}</h1>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    {{#deps}}
+                    <li>
+                        <span>{{_id}}</span>
+                        {{>part}}
+                    </li>
+                    {{/deps}}
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="dialog-button btn primary" data-button-id="ok">{{labels.close}}</a>
+            </div>
+        </div>
+    </div>
 </div>
