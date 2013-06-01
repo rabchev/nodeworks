@@ -83,38 +83,40 @@ define(function (require, exports, module) {
                 if (typeof res.bugs === "string") {
                     res.bugs = { url: res.bugs };
                 }
+                
                 rightCol.html(Mustache.render(tmpl.html(), res));
-                el = rightCol.find("#md-readMe");
+                
                 if (res.readmeFilename) {
+                    el = rightCol.find("#md-readMe");
                     el.click(function () {
                         window.open("modules/readme/" + res.name, res.name);
                     });
-                } else {
-                    el.addClass("hide");
                 }
                 
-                el = rightCol.find("#md-deps");
-                el.click(function () {
-                    brackets.app.callCommand("modules", "getDeps", [id], true, function (err, res) {
-                        if (err) {
-                            throw err;
-                        }
-                        
-                        var tmpl    = Templates.find("#md-deps-dialog"),
-                            part    = {
-                                part: tmpl.find(".modal-body").html()
-                            },
-                            mod     = {
-                                deps    : res,
-                                labels  : {
-                                    title   : Strings.VIEW_DEPS_TITLE,
-                                    close   : Strings.CMD_CLOSE
-                                }
-                            };
-                        
-                        Dialogs.showModalDialogUsingTemplate(Mustache.render(tmpl.html(), mod, part));
+                if (res.depsCount) {
+                    el = rightCol.find("#md-deps");
+                    el.click(function () {
+                        brackets.app.callCommand("modules", "getDeps", [id], true, function (err, res) {
+                            if (err) {
+                                throw err;
+                            }
+                            
+                            var tmpl    = Templates.find("#md-deps-dialog").html(),
+                                part    = {
+                                    part: Templates.find("#md-deps-dialog-part").html()
+                                },
+                                mod     = {
+                                    deps    : res,
+                                    labels  : {
+                                        title   : Strings.VIEW_DEPS_TITLE,
+                                        close   : Strings.CMD_CLOSE
+                                    }
+                                };
+                            
+                            Dialogs.showModalDialogUsingTemplate(Mustache.render(tmpl, mod, part));
+                        });
                     });
-                });
+                }
             }
             
             if (err) {

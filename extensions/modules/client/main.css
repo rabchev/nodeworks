@@ -199,3 +199,9 @@
 #md-det-cnt h4 {
     color: #777;
 }
+
+#md-deps-cnt {
+    max-height: 300px;
+    overflow: auto;
+    margin: 10px;
+}

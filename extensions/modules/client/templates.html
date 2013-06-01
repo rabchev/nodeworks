@@ -18,8 +18,12 @@
         <h2 id="md-det-title">{{name}}</h2>
         <div class="md-rule2"></div>
         <div id="md-det-hdr">
+            {{#readmeFilename}}
             <a href="#" id="md-readMe" class="md-btn">{{labels.readMe}}</a>
+            {{/readmeFilename}}
+            {{#depsCount}}
             <a href="#" id="md-deps" class="md-btn">{{labels.viewDeps}}</a>
+            {{/depsCount}}
             <a href="#" id="md-addRemove" class="md-btn">{{labels.addRemove}}</a>
         </div>
         <div id="md-det-cnt">
@@ -81,24 +85,36 @@
             {{/bugs}}
         </div>
     </div>
-    <div id="md-deps-dialog">
+    <script id="md-deps-dialog" type="text/template">
         <div class="deps-dialog modal">
             <div class="modal-header">
                 <h1 class="dialog-title">{{labels.title}}</h1>
             </div>
             <div class="modal-body">
-                <ul>
-                    {{#deps}}
-                    <li>
-                        <span>{{_id}}</span>
-                        {{>part}}
-                    </li>
-                    {{/deps}}
-                </ul>
+                <div id="md-deps-cnt">
+                    <ul>
+                        {{#deps}}
+                        <li>
+                            <span>{{_id}}</span>
+                            {{> part}}
+                        </li>
+                        {{/deps}}
+                    </ul>
+                </div>
             </div>
             <div class="modal-footer">
                 <a href="#" class="dialog-button btn primary" data-button-id="ok">{{labels.close}}</a>
             </div>
         </div>
-    </div>
+    </script>
+    <script id="md-deps-dialog-part" type="text/template">
+        <ul>
+            {{#deps}}
+            <li>
+                <span>{{_id}}</span>
+                {{> part}}
+            </li>
+            {{/deps}}
+        </ul>
+    </script>
 </div>

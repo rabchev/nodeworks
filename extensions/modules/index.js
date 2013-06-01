@@ -111,10 +111,11 @@ function surrogate(deps, recur) {
                     name            : mod.name,
                     version         : mod.version,
                     description     : mod.description,
-                    isExtraneous    : mod.isExtraneous
+                    isExtraneous    : mod.isExtraneous,
+                    depsCount       : Object.keys(mod.dependencies).length
                 };
                 
-                if (recur && mod.dependencies) {
+                if (recur) {
                     surr.deps = surrogate(mod.dependencies, recur);
                 }
                 list.push(surr);
@@ -151,7 +152,8 @@ exports.getInstalledModule = function (id, callback) {
                 readmeFilename  : dep.readmeFilename,
                 bugs            : dep.bugs,
                 license         : dep.license,
-                homepage        : dep.homepage
+                homepage        : dep.homepage,
+                depsCount       : Object.keys(dep.dependencies).length
             };
         
         callback(err, mod);
