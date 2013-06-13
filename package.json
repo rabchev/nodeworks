@@ -1,7 +1,7 @@
 {
-    "name": "works",
+    "name": "nodeworks",
     "description": "Node.js IDE",
-    "version": "0.0.1-beta-8",
+    "version": "0.0.1-beta-17",
     "author": "Boyan Rabchev <boyan@rabchev.com>",
     "contributors": [
         { "name": "Boyan Rabchev", "email": "boyan@rabchev.com" }
@@ -31,7 +31,8 @@
         "underscore": "*",
         "underscore.string": "*",
         "web-terminal": "*",
-        "marked": "*"
+        "marked": "*",
+        "supervisor": "https://github.com/rabchev/node-supervisor.git"
     },
     "devDependencies": {
         "nodeunit": "*",
@@ -58,5 +59,8 @@
         "css",
         "ide"
     ],
+    "scripts": {
+        "postinstall": "node ./lib/postinstall.js"
+    },
     "engines": { "node": ">=0.10" }
 }

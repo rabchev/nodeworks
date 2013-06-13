@@ -8,5 +8,5 @@ testing.js
 coverage.html
 lib-cov
 samples/
-*.markdown
-*.md
+
+!brackets-src/src/extensibility/node/node_modules*
