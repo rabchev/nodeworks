@@ -4,38 +4,41 @@
 define(function (require, exports, module) {
     "use strict";
     
-    var Dialogs         = brackets.getModule("widgets/Dialogs"),
-        Strings         = require("modules/strings"),
-        Templates       = $(require("text!modules/templates.html")),
-        labels          = {
-            addRepo     : Strings.LBL_ADD_REPO,
-            installed   : Strings.LBL_INSTALLED,
-            npm         : Strings.LBL_NPM
+    var Dialogs             = brackets.getModule("widgets/Dialogs"),
+        ExtensionManager    = brackets.getModule("utils/ExtensionLoader"),
+        output              = ExtensionManager.getRequireContextForExtension("output-panel")("main"),
+        Strings             = require("modules/strings"),
+        Templates           = $(require("text!modules/templates.html")),
+        labels              = {
+            addRepo             : Strings.LBL_ADD_REPO,
+            installed           : Strings.LBL_INSTALLED,
+            npm                 : Strings.LBL_NPM
         },
-        detLabels       = {
-            addRemove   : Strings.LBL_UNINSTALL,
-            readMe      : Strings.LBL_VIEW_README,
-            viewDeps    : Strings.LBL_VIEW_DEPS,
-            description : Strings.LBL_DESCRIPTION,
-            version     : Strings.LBL_VERSION,
-            license     : Strings.LBL_LICENSE,
-            author      : Strings.LBL_AUTHOR,
-            contribs    : Strings.LBL_CONTRIBS,
-            repository  : Strings.LBL_REPOSITORY,
-            bugs        : Strings.LBL_BUGS,
-            name        : Strings.LBL_NAME,
-            email       : Strings.LBL_EMAIL,
-            url         : Strings.LBL_URL,
-            type        : Strings.LBL_TYPE,
-            homepage    : Strings.LBL_HOMEPAGE
+        detLabels           = {
+            addRemove           : Strings.LBL_UNINSTALL,
+            readMe              : Strings.LBL_VIEW_README,
+            viewDeps            : Strings.LBL_VIEW_DEPS,
+            description         : Strings.LBL_DESCRIPTION,
+            version             : Strings.LBL_VERSION,
+            license             : Strings.LBL_LICENSE,
+            author              : Strings.LBL_AUTHOR,
+            contribs            : Strings.LBL_CONTRIBS,
+            repository          : Strings.LBL_REPOSITORY,
+            bugs                : Strings.LBL_BUGS,
+            name                : Strings.LBL_NAME,
+            email               : Strings.LBL_EMAIL,
+            url                 : Strings.LBL_URL,
+            type                : Strings.LBL_TYPE,
+            homepage            : Strings.LBL_HOMEPAGE
         },
+        extName             = "Modules",
         currRepo,
         editor,
         root,
         midCol,
         rightCol,
         currMod;
-    
+            
     function setCurrRepo(repo) {
         if (currRepo !== repo) {
             midCol.empty();
@@ -120,14 +123,14 @@ define(function (require, exports, module) {
             }
             
             if (err) {
-                // TODO: print error or warning message
+                output.log(extName, err.message);
             }
         });
     }
     
     function showInstalled() {
         setCurrRepo("installed");
-        
+        output.log(extName, "showInstalled called!");
         brackets.app.callCommand("modules", "showInstalled", [], true, function (err, res) {
             if (res) {
                 res.sort(function (a, b) {
@@ -152,7 +155,7 @@ define(function (require, exports, module) {
             }
             
             if (err) {
-                // TODO: print error or warning message
+                output.log(extName, err.message);
             }
         });
     }
