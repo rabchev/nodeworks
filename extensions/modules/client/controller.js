@@ -120,6 +120,19 @@ define(function (require, exports, module) {
                         });
                     });
                 }
+                
+                el = rightCol.find("#md-addRemove");
+                if (res.isExtraneous) {
+                    el.text(Strings.LBL_INSTALL);
+                    el.click(function () {
+                    
+                    });
+                } else {
+                    el.text(Strings.LBL_UNINSTALL);
+                    el.click(function () {
+                        output.log(extName, "Uninstalled Successfully.");
+                    });
+                }
             }
             
             if (err) {
@@ -130,7 +143,7 @@ define(function (require, exports, module) {
     
     function showInstalled() {
         setCurrRepo("installed");
-        output.log(extName, "showInstalled called!");
+        
         brackets.app.callCommand("modules", "showInstalled", [], true, function (err, res) {
             if (res) {
                 res.sort(function (a, b) {
