@@ -130,7 +130,7 @@ define(function (require, exports, module) {
                 } else {
                     el.text(Strings.LBL_UNINSTALL);
                     el.click(function () {
-                        output.log(extName, "Uninstalled Successfully.");
+                        output.log(extName, "Uninstalled Successfully - ");
                     });
                 }
             }
