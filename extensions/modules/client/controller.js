@@ -176,7 +176,6 @@ define(function (require, exports, module) {
     function showNPM() {
         setCurrRepo("npm");
         
-        
     }
     
     module.exports = exports = function (edtr) {
