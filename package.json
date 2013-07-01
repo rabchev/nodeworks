@@ -1,7 +1,7 @@
 {
     "name": "nodeworks",
     "description": "Node.js IDE",
-    "version": "0.0.1-beta-17",
+    "version": "0.0.1-beta-18",
     "author": "Boyan Rabchev <boyan@rabchev.com>",
     "contributors": [
         { "name": "Boyan Rabchev", "email": "boyan@rabchev.com" }
