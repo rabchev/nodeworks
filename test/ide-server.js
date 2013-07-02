@@ -1,6 +1,8 @@
 /*jslint plusplus: true, devel: true, nomen: true, node: true, indent: 4, maxerr: 50 */
 /*global require, exports, module */
 
+//debugger;
+
 var testCase  = require('nodeunit').testCase;
 
 var connect = require('connect');
@@ -46,7 +48,7 @@ module.exports = testCase({
             test.equal(res.headers["content-type"], "text/html; charset=UTF-8");
             res.on("data", function (chunk) {
                 var str = String(chunk);
-                test.ok(str.indexOf("<script src=\"thirdparty/require.js\" data-main=\"brackets\"></script>") !== -1);
+                test.ok(str.indexOf("<script src=\"thirdparty/requirejs/require.js\" data-main=\"brackets\"></script>") !== -1);
                 test.done();
             });
         }).on('error', function (e) {
@@ -56,15 +58,20 @@ module.exports = testCase({
     },
     "test resource file": function (test) {
         "use strict";
+        
         test.expect(3);
-        http.get(appUrl + "/works/thirdparty/require.js", function (res) {
+        http.get(appUrl + "/works/thirdparty/requirejs/require.js", function (res) {
+            var buff = "";
+            
             res.setEncoding('utf8');
             
             test.equal(res.statusCode, 200);
             test.equal(res.headers["content-type"], "application/javascript");
             res.on("data", function (chunk) {
-                var str = String(chunk);
-                test.ok(str.indexOf("RequireJS") !== -1);
+                buff += String(chunk);
+            });
+            res.on("end", function () {
+                test.ok(buff.indexOf("RequireJS") !== -1);
                 test.done();
             });
         }).on('error', function (e) {

@@ -16,7 +16,7 @@
     "dependencies": {
         "send": "*",
         "connect": "*",
-        "wrench": "*",
+        "wrench": "1.4.4",
         "netutil": "*",
         "commander": "*",
         "open": "*",

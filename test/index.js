@@ -1,4 +1,4 @@
-/*jslint plusplus: true, devel: true, nomen: true, node: true, indent: 4, maxerr: 50 */
+/*jslint plusplus: true, devel: true, nomen: true, node: true, es5: true, indent: 4, maxerr: 50 */
 /*global require, exports, module */
 
 try {

@@ -123,12 +123,12 @@ var copyFiles = function (src, trg, callback) {
     
     emptyDirectory(trg, function (empty) {
         if (empty || commander.force) {
-            wrench.copyDirSyncRecursive(src, trg, { excludeHiddenUnix: true, preserve: true });
+            wrench.copyDirSyncRecursive(src, trg, { excludeHiddenUnix: true, preserve: true, preserveFiles: true });
             callback(false);
         } else {
             commander.confirm("\n\n" + Strings.CONFIRM_NONEMPTY_DIR + " ", function (ok) {
                 if (ok) {
-                    wrench.copyDirSyncRecursive(src, trg, { excludeHiddenUnix: true, preserve: true });
+                    wrench.copyDirSyncRecursive(src, trg, { excludeHiddenUnix: true, preserve: true, preserveFiles: true });
                     callback(false);
                 } else {
                     callback(true);
@@ -143,7 +143,7 @@ function installTemplate(callback) {
     
     var args = commander.install.split(" "),
         src = path.join(__dirname, "templates", args[0]),
-        trg = process.cwd();
+        trg = commander.directory ? path.join(process.cwd(), commander.directory) : process.cwd();
     
     function exit(err) {
         if (err) {
@@ -167,10 +167,15 @@ function installTemplate(callback) {
     }
     
     copyFiles(src, trg, function (abort) {
+        var conf = nopt(types, shorthands);
+        
         if (abort) {
             exit(new Error(Strings.INSTALLATION_ABORTED));
         } else {
-            var conf = nopt(types, shorthands);
+            if (process.cwd() !== trg) {
+                process.chdir(trg);   
+            }
+            
             conf._exit = true;
             npm.load(conf, function (err) {
                 if (err) {
