@@ -130,7 +130,55 @@ define(function (require, exports, module) {
                 } else {
                     el.text(Strings.LBL_UNINSTALL);
                     el.click(function () {
-                        output.log(extName, "Uninstalled Successfully - ");
+                        var i,
+                            val = "foo";
+                        for (i = 0; i < 10; i++) {
+                            output.log(val, "log - " + val + ": " + i);
+                        }
+                        val = "bar";
+                        for (i = 0; i < 10; i++) {
+                            output.log(val, "log - " + val + ": " + i);
+                        }
+                        val = "Waldo Glaply Quux";
+                        for (i = 0; i < 10; i++) {
+                            output.log(val, "log - " + val + ": " + i);
+                        }
+                        val = "baz";
+                        for (i = 0; i < 10; i++) {
+                            output.log(val, "log - " + val + ": " + i);
+                        }
+                        val = "qux";
+                        for (i = 0; i < 10; i++) {
+                            output.log(val, "log - " + val + ": " + i);
+                        }
+                        val = "quux";
+                        for (i = 0; i < 10; i++) {
+                            output.log(val, "log - " + val + ": " + i);
+                        }
+                        val = "corge";
+                        for (i = 0; i < 10; i++) {
+                            output.log(val, "log - " + val + ": " + i);
+                        }
+                        val = "grault";
+                        for (i = 0; i < 10; i++) {
+                            output.log(val, "log - " + val + ": " + i);
+                        }
+                        val = "graply";
+                        for (i = 0; i < 10; i++) {
+                            output.log(val, "log - " + val + ": " + i);
+                        }
+                        val = "waldo";
+                        for (i = 0; i < 10; i++) {
+                            output.log(val, "log - " + val + ": " + i);
+                        }
+                        val = "quux";
+                        for (i = 0; i < 10; i++) {
+                            output.log(val, "log - " + val + ": " + i);
+                        }
+                        val = "bar";
+                        for (i = 0; i < 10; i++) {
+                            output.log(val, "log - " + val + ": " + i);
+                        }
                     });
                 }
             }
