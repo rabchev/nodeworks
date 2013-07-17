@@ -153,7 +153,7 @@ exports.getInstalledModule = function (id, callback) {
                 bugs            : dep.bugs,
                 license         : dep.license,
                 homepage        : dep.homepage,
-                depsCount       : Object.keys(dep.dependencies).length
+                depsCount       : dep.dependencies ? Object.keys(dep.dependencies).length : 0
             };
         
         callback(err, mod);
@@ -169,6 +169,22 @@ exports.getDeps = function (id, callback) {
             dep     = rootObj.dependencies[name];
         
         callback(err, surrogate(dep.dependencies, true));
+    });
+};
+
+exports.uninstall = function (name, callback) {
+    "use strict";
+    
+    var conf = nopt(types, shorthands);
+    conf._exit = true;
+    npm.load(conf, function (err) {
+        if (err) {
+            throw err;
+        }
+            
+        npm.commands.uninstall([name], function (err, res) {
+            callback(err, res);
+        });
     });
 };
 

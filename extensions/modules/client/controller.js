@@ -1,5 +1,5 @@
 /*jslint vars: true, plusplus: true, devel: true, nomen: true, regexp: true, indent: 4, maxerr: 50 */
-/*global define, $, brackets, unescape, window, document, Mustache */
+/*global define, $, brackets, unescape, window, document, Mustache, showInstalled */
 
 define(function (require, exports, module) {
     "use strict";
@@ -38,6 +38,14 @@ define(function (require, exports, module) {
         midCol,
         rightCol,
         currMod;
+    
+    function log(msg) {
+        if (!output.isVisible()) {
+            output.toggleVisibility();
+        }
+        
+        output.log(extName, msg);
+    }
             
     function setCurrRepo(repo) {
         if (currRepo !== repo) {
@@ -68,6 +76,30 @@ define(function (require, exports, module) {
     
     function addRepo() {
         alert("Not implemented yet.");
+    }
+    
+    function callInstaller(cmd, module) {
+        brackets.app.callCommand("modules", cmd, [module], true, function (err, res) {
+            if (err) {
+                res = "ERROR: \"" + cmd + " " + module + "\" failed with the following error: ";
+                if (err.message) {
+                    res += err.message;
+                } else {
+                    res += JSON.stringify(err);
+                }
+            } else {
+                // TODO: Needs refacotring to refersh NPM repos as well
+                showInstalled();
+                if (res.length > 0) {
+                    res.forEach(function (itm) {
+                        log(itm);
+                    });
+                } else {
+                    res = cmd + " " + module + " succeeded.";
+                }
+            }
+            log(res);
+        });
     }
     
     function showDetailes(id) {
@@ -125,60 +157,12 @@ define(function (require, exports, module) {
                 if (res.isExtraneous) {
                     el.text(Strings.LBL_INSTALL);
                     el.click(function () {
-                    
+                        callInstaller("install", res.name);
                     });
                 } else {
                     el.text(Strings.LBL_UNINSTALL);
                     el.click(function () {
-                        var i,
-                            val = "foo";
-                        for (i = 0; i < 10; i++) {
-                            output.log(val, "log - " + val + ": " + i);
-                        }
-                        val = "bar";
-                        for (i = 0; i < 10; i++) {
-                            output.log(val, "log - " + val + ": " + i);
-                        }
-                        val = "Waldo Glaply Quux";
-                        for (i = 0; i < 10; i++) {
-                            output.log(val, "log - " + val + ": " + i);
-                        }
-                        val = "baz";
-                        for (i = 0; i < 10; i++) {
-                            output.log(val, "log - " + val + ": " + i);
-                        }
-                        val = "qux";
-                        for (i = 0; i < 10; i++) {
-                            output.log(val, "log - " + val + ": " + i);
-                        }
-                        val = "quux";
-                        for (i = 0; i < 10; i++) {
-                            output.log(val, "log - " + val + ": " + i);
-                        }
-                        val = "corge";
-                        for (i = 0; i < 10; i++) {
-                            output.log(val, "log - " + val + ": " + i);
-                        }
-                        val = "grault";
-                        for (i = 0; i < 10; i++) {
-                            output.log(val, "log - " + val + ": " + i);
-                        }
-                        val = "graply";
-                        for (i = 0; i < 10; i++) {
-                            output.log(val, "log - " + val + ": " + i);
-                        }
-                        val = "waldo";
-                        for (i = 0; i < 10; i++) {
-                            output.log(val, "log - " + val + ": " + i);
-                        }
-                        val = "quux";
-                        for (i = 0; i < 10; i++) {
-                            output.log(val, "log - " + val + ": " + i);
-                        }
-                        val = "bar";
-                        for (i = 0; i < 10; i++) {
-                            output.log(val, "log - " + val + ": " + i);
-                        }
+                        callInstaller("uninstall", res.name);
                     });
                 }
             }
